@@ -1,35 +1,36 @@
-data=csvread("usamortality.csv")
-year = data(:,1);
-deaths1 = data(:,2)
-deaths24= data(:,3);
-deaths44= data(:,4);
-deaths64= data(:,5);
-deaths65= data(:,6);
-totaldeaths = data(:,7)
+function [theta, J_history] = gradientDescent(X, y, theta, alpha, num_iters)
+%GRADIENTDESCENT Performs gradient descent to learn theta
+%   theta = GRADIENTDESENT(X, y, theta, alpha, num_iters) updates theta by
+%   taking num_iters gradient steps with learning rate alpha
 
-data2010 = data(1:49,:)
-new_data_year = data2010(:,1);
-new_data_deaths1  = data2010(:,2);
-new_data_deaths24 = data2010(:,3);
-new_data_deaths44 = data2010(:,4);
-new_data_deaths64 = data2010(:,5);
-new_data_deaths65 = data2010(:,6);
-new_data_totaldeaths = data2010(:,7);
+% Initialize some useful values
+m = length(y); % number of training examples
+J_history = zeros(num_iters, 1);
 
-function plotData(new_data_year,new_data_deaths1)
-  plot(new_data_year,new_data_deaths1,'rx','MarkerSize',10)
-   title("People less than 1 years old")
-   xlabel("Years")
-   ylabel("Deaths of people")
+for iter = 1:num_iters
+
+    % ====================== YOUR CODE HERE ======================
+    % Instructions: Perform a single gradient step on the parameter vector
+    %               theta.
+    %
+    % Hint: While debugging, it can be useful to print out the values
+    %       of the cost function (computeCost) and gradient here.
+    %
+
+
+    x = X(:,2);
+    h = theta(1) + (theta(2)*x);
+
+    theta_zero = theta(1) - alpha * (1/m) * sum(h-y);
+    theta_one  = theta(2) - alpha * (1/m) * sum((h - y) .* x);
+
+    theta = [theta_zero; theta_one];
+    % ============================================================
+
+    % Save the cost J in every iteration
+    J_history(iter) = computeCost(X, y, theta);
+    % disp(J_history(iter));
 end
-plotData(new_data_year,new_data_deaths1)
 
-m = length(new_data_year);
-X = [ones(m,1) new_data_year];
-theta = (pinv(X'*X))*X'*new_data_deaths1
-
-plotData(new_data_year,new_data_deaths1)
-hold on;
-plot(X(:,2), X*theta, '-')
-legend('Training data', 'Linear regression')
-hold off
+  disp(min(J_history));
+end
