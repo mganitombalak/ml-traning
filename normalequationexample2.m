@@ -1,5 +1,4 @@
-data=csvread("C:\\Users\\umutk\\Desktop\\usamortality.csv")
-#data =([1,57],:) = [];
+data=csvread("usamortality.csv")
 year = data(:,1);
 deaths1 = data(:,2)
 deaths24= data(:,3);
@@ -19,10 +18,11 @@ new_data_totaldeaths = data2010(:,7);
 
 function plotData(new_data_year,new_data_deaths1)
   plot(new_data_year,new_data_deaths1,'rx','MarkerSize',10)
+   title("People less than 1 years old")
+   xlabel("Years")
+   ylabel("Deaths of people")
 end
 plotData(new_data_year,new_data_deaths1)
-new_data_yearlabel =('Years')
-new_data_deaths1abel =('Deaths of people who are less than 1 years old')
 
 m = length(new_data_year);
 X = [ones(m,1) new_data_year];
