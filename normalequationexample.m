@@ -1,3 +1,4 @@
+clear all,clear, clc
 data=csvread("usamortality.csv")
 year = data(:,1);
 deaths1 = data(:,2)
@@ -16,19 +17,13 @@ new_data_deaths64 = data2010(:,5);
 new_data_deaths65 = data2010(:,6);
 new_data_totaldeaths = data2010(:,7);
 
-function plotData(new_data_year,new_data_deaths1)
-  plot(new_data_year,new_data_deaths1,'rx','MarkerSize',10)
-  title("People less than 1 years old")
-  xlabel("Years")
-  ylabel("Deaths of people")
-end
-plotData(new_data_year,new_data_deaths1)
-  
+plotData(new_data_year,new_data_deaths1,"People","Years","Deaths")
+
 m = length(new_data_year);
 X = [ones(m,1) new_data_year];
 theta = (pinv(X'*X))*X'*new_data_deaths1
 
-plotData(new_data_year,new_data_deaths1)
+plotData(new_data_year,new_data_deaths1,"People","Years","Deaths")
 hold on;
 plot(X(:,2), X*theta, '-')
 legend('Training data', 'Linear regression')
