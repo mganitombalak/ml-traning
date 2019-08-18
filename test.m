@@ -5,7 +5,7 @@ plot(x,y,'rx');
 teta=[0;0];
 lr=0.04;
 m=length(y);
-iteration=500
+iteration=500;
 jteta=zeros(iteration,3)
 for iter=1:iteration
 h=teta(1) + (teta(2)*x);
@@ -15,8 +15,8 @@ teta_zero = teta(1) - (lr/m)*sum(diff)
 teta_one = teta(2) - (lr/m)*sum(diff.*x);
 teta=[teta_zero;teta_one]
 jteta(iter,:)=[j teta_zero teta_one]
-endfor
-tetatemp= jteta(iteration,2:3)
+end
+tetatemp= jteta(iteration,2:3)%min(jteta,[],1) %
 h2=tetatemp(1) + (tetatemp(2)*x);
 hold on
 plot(h2)
